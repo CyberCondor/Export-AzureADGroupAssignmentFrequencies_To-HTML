@@ -156,17 +156,14 @@ function Get-PropertyFrequencies($Property, $Object){
     $isDate = $false                                                                                                                                                          
     foreach($UniqueValue in $AllUniquePropertyValues){
         if(!($isDate -eq $true)){
-            if([string]$UniqueValue.$Property -as [DateTime]){
-                $isDate = $true
-            }
+            if([string]$UniqueValue.$Property -as [DateTime]){$isDate = $true}
         }
         $PropertyFrequencies += New-Object -TypeName PSobject -Property @{$Property=$($UniqueValue.$Property);Count=0;Frequency="100%"} # Copy Uniques to Object Array and Init Count as 0
     }
     if(($isDate -eq $true) -and (($Object | Select $Property | Get-Member).Definition -like "*datetime*")){
         foreach($PropertyFrequency in $PropertyFrequencies){
             if(($PropertyFrequency.$Property) -and ([string]$PropertyFrequency.$Property -as [DateTime])){
-                try{$PropertyFrequency.$Property = $PropertyFrequency.$Property.ToString("yyyy-MM")
-                }
+                try{$PropertyFrequency.$Property = $PropertyFrequency.$Property.ToString("yyyy-MM")}
                 catch{# Nothing
                 }
             }
@@ -177,8 +174,7 @@ function Get-PropertyFrequencies($Property, $Object){
                 if(($PropertyName -eq $null) -and ($PropertyFrequency -eq $null)){$PropertyFrequency.Count++}   # If Property value is NULL, then add to count - still want to track this
                 elseif($PropertyName -ceq $PropertyFrequency.$Property){$PropertyFrequency.Count++}             # Else If Property value is current value, then add to count
                 else{
-                    try{if($PropertyName.ToString("yyyy-MM") -ceq $PropertyFrequency.$Property){$PropertyFrequency.Count++}
-                    }
+                    try{if($PropertyName.ToString("yyyy-MM") -ceq $PropertyFrequency.$Property){$PropertyFrequency.Count++}}
                     catch{# Nothing
                     }
                 }
@@ -196,11 +192,9 @@ function Get-PropertyFrequencies($Property, $Object){
     }
     Write-Progress -id 1 -Completed -Activity "Complete"
     if($Total -gt 0){
-        foreach($PropertyFrequency in $PropertyFrequencies){
-            $PropertyFrequency.Frequency = ($PropertyFrequency.Count/$Total).ToString("P")
-        }
+        foreach($PropertyFrequency in $PropertyFrequencies){$PropertyFrequency.Frequency = ($PropertyFrequency.Count/$Total).ToString("P")}
     }
-    return $PropertyFrequencies
+    return $PropertyFrequencies | select Count,$Property,Frequency | sort Count,$Property | Unique -AsString
 }
 function DisplayFrequencies($Property, $PropertyFrequencies){
     return $PropertyFrequencies | select Count,$Property,Frequency | sort Count,$Property
