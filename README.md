@@ -26,7 +26,7 @@ Groups
 - Contains list of all groups and their members
 
 ## Output
-~\AzureADGroupAssignmentFrequenyAnalysisReports\AzureADGroupAssignmentFrequenyAnalysisReport_$Date
+~\_FrequenyAnalysisReports\AzureADGroupAssignmentFrequenyAnalysisReport_$Date
 - Groups.html
 - Users.html
 - JobTitles.html
