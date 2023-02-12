@@ -19,7 +19,7 @@ Groups
 - Contains list of all groups and their members
 
 ## Output
-~\AzureADGroupAssignmentFrequenyAnalysisReports\AzureADGroupAssignmentFrequenyAnalysisReport_$Date
+~\_FrequenyAnalysisReports\AzureADGroupAssignmentFrequenyAnalysisReport_$Date
 - Groups.html
 - Users.html
 - JobTitles.html
@@ -36,7 +36,7 @@ catch{$errMsg = $_.Exception.message
         Write-Output "Ensure 'AzureAD PS Module is installed. 'Install-Module AzureAD'"
         break
     }
-    elseif($errMsg.Contains("*Connect-AzureAD*")){
+    elseif($_.Exception -like "*Connect-AzureAD*"){
         Write-Warning "`t $_.Exception"
         Write-Output "Calling Connect-AzureAD"
         try{Connect-AzureAD -ErrorAction stop
@@ -375,7 +375,7 @@ function main{
     $ExistingUsers_AzureAD = Get-ExistingUsers_AzureAD #| where {$_.AccountEnabled -eq $true}
     if($ExistingUsers_AzureAD -eq $null){break}
 
-    $MainFolderPath   = "~\AzureADGroupAssignmentFrequenyAnalysisReports"
+    $MainFolderPath   = "~\_FrequenyAnalysisReports"
     $ReportFolderName = ("AzureADGroupAssignmentFrequenyAnalysisReport_" + $(get-date -format yyy-MM-dd))
     $ReportFolder     = New-Object -TypeName PSObject -Property @{Name=$ReportFolderName;Path="$MainFolderPath\$ReportFolderName"}
     $CurrDir          = (pwd).Path
