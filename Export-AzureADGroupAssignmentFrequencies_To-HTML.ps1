@@ -81,7 +81,7 @@ function Create-NewHtmlReportFromTemplate($TemplateFilePath, $NameOfPage, $Repor
         Select -Last (((Select-String "<h1>" $TemplateFilePath | select -First 1).linenumber - 1) - ((Select-String "<title>" $TemplateFilePath | select -First 1).linenumber)) | 
         Out-File $NewHtmlReport.Path -Append -Encoding utf8
     Write-Output "                        <h1>$($ReportFolder.Name)</h1>" | Out-File $NewHtmlReport.Path -Append -Encoding utf8
-    Write-Output "                        <p>$($InfoDivTitles)</p>"       | Out-File $NewHtmlReport.Path -Append -Encoding utf8
+    Write-Output "                        <p class='info-div-titles'>$($InfoDivTitles)</p>"       | Out-File $NewHtmlReport.Path -Append -Encoding utf8
 
     Get-Content $TemplateFilePath | Select -First ((Select-String "</ul>" $TemplateFilePath | select -First 1).linenumber - 1) | 
         Select -Last (((Select-String "</ul>" $TemplateFilePath | select -First 1).linenumber) - ((Select-String "</p>" $TemplateFilePath | select -First 1).linenumber) - 1) | 
