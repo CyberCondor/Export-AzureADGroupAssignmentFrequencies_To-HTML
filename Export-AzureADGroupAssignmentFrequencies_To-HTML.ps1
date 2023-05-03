@@ -376,7 +376,7 @@ function main{
     if($ExistingUsers_AzureAD -eq $null){break}
 
     $MainFolderPath   = "~\_FrequenyAnalysisReports"
-    $ReportFolderName = ("AzureADGroupAssignmentFrequenyAnalysisReport-$($Server)_" + $(get-date -format yyy-MM-dd))
+    $ReportFolderName = ("AzureADGroupAssignmentFrequenyAnalysisReport_" + $(get-date -format yyy-MM-dd))
     $ReportFolder     = New-Object -TypeName PSObject -Property @{Name=$ReportFolderName;Path="$MainFolderPath\$ReportFolderName"}
     $CurrDir          = (pwd).Path
     if((!(Test-Path Template.html)) -or (!((Get-Content Template.html | select -First 1).Contains("<!DOCTYPE HTML>")))){
