@@ -1,6 +1,6 @@
 # Export-AzureADGroupAssignmentFrequencies_To-HTML.ps1
 ### SYNOPSIS
-Groups typically control permissions and sepperation of duties.
+Groups typically control permissions and separation of duties.
 
 Information produced by this program can help with understanding the state of permission management.
 
